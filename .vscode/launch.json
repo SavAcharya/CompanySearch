@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CompanySearchApplication",
+            "request": "launch",
+            "mainClass": "com.sourav.companysearch.companysearch.CompanySearchApplication",
+            "projectName": "companysearch"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CompanysearchApplication<companysearch>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.sourav.companysearch.companysearch.CompanysearchApplication",
+            "projectName": "companysearch",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
