@@ -9,8 +9,8 @@
         <version>3.1.3</version>
         <relativePath/>
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>company-search</artifactId>
+    <groupId>com.sourav.companysearch</groupId>
+    <artifactId>application</artifactId>
     <version>1.0.0</version>
     <name>company-search</name>
     <description>Company Search Application</description>
@@ -41,6 +41,11 @@
             <version>2.35.0</version>
             <scope>test</scope>
         </dependency>
+<groupId>io.netty</groupId>
+    <artifactId>netty-resolver-dns-native-macos</artifactId>
+    <version>4.1.79.Final</version>
+    <classifier>osx-aarch_64</classifier>
+
     </dependencies>
     <build>
         <plugins>

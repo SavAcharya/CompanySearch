@@ -1,12 +1,13 @@
-package com.sourav.companysearch.companysearch.controller;
+package com.sourav.companysearch.application.controller;
 
-import com.sourav.companysearch.companysearch.model.CompanySearchRequest;
-import com.sourav.companysearch.companysearch.model.CompanySearchResponse;
-import com.sourav.companysearch.companysearch.service.CompanyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.sourav.companysearch.application.model.CompanySearchRequest;
+import com.sourav.companysearch.application.model.CompanySearchResponse;
+import com.sourav.companysearch.application.service.CompanyService;
 
 /**
  * REST Controller for company search operations.

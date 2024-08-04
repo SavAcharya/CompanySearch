@@ -1,22 +1,16 @@
-package com.sourav.companysearch.companysearch.service;
+package com.sourav.companysearch.application.service;
 
-
-
-import com.sourav.companysearch.companysearch.model.*;
+import com.sourav.companysearch.application.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-/**
- * Service class for company search operations.
- * 
- * @author Sourav Bhattacharya
- */
 
 @Service
 public class CompanyService {
@@ -30,13 +24,6 @@ public class CompanyService {
         this.apiKey = apiKey;
     }
 
-    /**
-     * Search for companies based on the provided request.
-     * 
-     * @param request The search request.
-     * @param activeOnly Flag to filter only active companies.
-     * @return CompanySearchResponse containing the search results.
-     */
     public CompanySearchResponse searchCompanies(CompanySearchRequest request, boolean activeOnly) {
         String searchTerm = request.getCompanyNumber() != null ? request.getCompanyNumber() : request.getCompanyName();
 
@@ -48,6 +35,10 @@ public class CompanyService {
                 .header("x-api-key", apiKey)
                 .retrieve()
                 .bodyToMono(CompanySearchResponse.class)
+                .onErrorResume(WebClientResponseException.class, ex -> {
+                    System.err.println("Error searching companies: " + ex.getMessage());
+                    return Mono.just(new CompanySearchResponse());
+                })
                 .block();
 
         if (searchResponse != null && searchResponse.getItems() != null) {
@@ -67,25 +58,28 @@ public class CompanyService {
         return searchResponse;
     }
 
-    /**
-     * Retrieve officers for a specific company.
-     * 
-     * @param companyNumber The company number.
-     * @return List of active officers.
-     */
     private List<Officer> getCompanyOfficers(String companyNumber) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/TruProxyAPI/rest/Companies/v1/Officers")
-                        .queryParam("CompanyNumber", companyNumber)
-                        .build())
-                .header("x-api-key", apiKey)
-                .retrieve()
-                .bodyToMono(OfficerResponse.class)
-                .map(OfficerResponse::getItems)
-                .map(officers -> officers.stream()
-                        .filter(officer -> officer.getResignedOn() == null)
-                        .collect(Collectors.toList()))
-                .block();
+        try {
+            return webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/TruProxyAPI/rest/Companies/v1/Officers")
+                            .queryParam("CompanyNumber", companyNumber)
+                            .build())
+                    .header("x-api-key", apiKey)
+                    .retrieve()
+                    .bodyToMono(OfficerResponse.class)
+                    .map(OfficerResponse::getItems)
+                    .map(officers -> officers.stream()
+                            .filter(officer -> officer.getResignedOn() == null)
+                            .collect(Collectors.toList()))
+                    .onErrorResume(WebClientResponseException.class, ex -> {
+                        System.err.println("Error fetching officers for company " + companyNumber + ": " + ex.getMessage());
+                        return Mono.just(Collections.emptyList());
+                    })
+                    .block();
+        } catch (Exception e) {
+            System.err.println("Unexpected error fetching officers for company " + companyNumber + ": " + e.getMessage());
+            return Collections.emptyList();
+        }
     }
 }

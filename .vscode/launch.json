@@ -4,6 +4,13 @@
             "type": "java",
             "name": "CompanySearchApplication",
             "request": "launch",
+            "mainClass": "com.sourav.companysearch.application.CompanySearchApplication",
+            "projectName": "companysearch"
+        },
+        {
+            "type": "java",
+            "name": "CompanySearchApplication",
+            "request": "launch",
             "mainClass": "com.sourav.companysearch.companysearch.CompanySearchApplication",
             "projectName": "companysearch"
         },

@@ -1,4 +1,4 @@
-package com.sourav.companysearch.companysearch.config;
+package com.sourav.companysearch.application.config;
 
 
 import org.springframework.beans.factory.annotation.Value;

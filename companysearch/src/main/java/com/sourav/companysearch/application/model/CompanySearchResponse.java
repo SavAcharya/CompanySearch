@@ -1,4 +1,4 @@
-package com.sourav.companysearch.companysearch.model;
+package com.sourav.companysearch.application.model;
 
 import java.util.ArrayList;
 import java.util.List;

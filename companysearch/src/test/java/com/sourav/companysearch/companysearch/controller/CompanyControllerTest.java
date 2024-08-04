@@ -1,9 +1,5 @@
 package com.sourav.companysearch.companysearch.controller;
 
-import com.sourav.companysearch.companysearch.model.Company;
-import com.sourav.companysearch.companysearch.model.CompanySearchRequest;
-import com.sourav.companysearch.companysearch.model.CompanySearchResponse;
-import com.sourav.companysearch.companysearch.service.CompanyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +7,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.sourav.companysearch.application.controller.CompanyController;
+import com.sourav.companysearch.application.model.Company;
+import com.sourav.companysearch.application.model.CompanySearchRequest;
+import com.sourav.companysearch.application.model.CompanySearchResponse;
+import com.sourav.companysearch.application.service.CompanyService;
 
 import java.util.Collections;
 
